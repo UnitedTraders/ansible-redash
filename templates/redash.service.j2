@@ -1,0 +1,14 @@
+[Unit]
+Description=Make Your Company Data Driven. Connect to any data source, easily visualize and share your data. http://redash.io/
+Requires=docker.service
+After=docker.service
+
+[Service]
+WorkingDirectory={{ redash_home }}
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down
+ExecRestart=/usr/bin/docker-compose down && /usr/bin/docker-compose up
+User=root
+
+[Install]
+WantedBy=multi-user.target

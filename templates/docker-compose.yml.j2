@@ -1,0 +1,51 @@
+version: '2'
+services:
+  server:
+    image: registry.auroraplatform.com/redash:ldap
+    command: server
+    depends_on:
+      - redis
+    ports:
+      - "{{ redash_http_port }}:5000"
+    extra_hosts:
+      - "pg_host:{{ redash_postgres_host }}"
+    environment:
+      PYTHONUNBUFFERED: 0
+      REDASH_LOG_LEVEL: "INFO"
+      REDASH_REDIS_URL: "redis://redis:6379/0"
+      REDASH_DATABASE_URL: "postgresql://{{ redash_postgres_user }}:{{ redash_postgres_password }}@pg_host/{{ redash_postgres_db }}"
+      REDASH_COOKIE_SECRET: {{ redash_cookie_secret }}
+      REDASH_LDAP_LOGIN_ENABLED: 1
+      REDASH_LDAP_URL: "ldap://pg_host:10389"
+      REDASH_LDAP_BIND_DN: "cn=robot,ou=users,dc=crowd"
+      REDASH_LDAP_BIND_DN_PASSWORD: "{{ lookup('vault', 'secret/ansible/ldap_bind_password', 'value') }}"
+      REDASH_LDAP_DISPLAY_NAME_KEY: "cn"
+      REDASH_LDAP_EMAIL_KEY: "mail"
+      REDASH_LDAP_LDAP_CUSTOM_USERNAME_PROMPT: "Crowd username"
+      REDASH_LDAP_SEARCH_TEMPLATE: "(uid=%(username)s)"
+      REDASH_SEARCH_DN: "ou=users,dc=crowd"
+      REDASH_PASSWORD_LOGIN_ENABLED: 0
+  worker:
+    image: registry.auroraplatform.com/redash:ldap
+    command: scheduler
+    extra_hosts:
+      - "pg_host:{{ redash_postgres_host }}"
+    environment:
+      PYTHONUNBUFFERED: 0
+      REDASH_LOG_LEVEL: "INFO"
+      REDASH_REDIS_URL: "redis://redis:6379/0"
+      REDASH_DATABASE_URL: "postgresql://{{ redash_postgres_user }}:{{ redash_postgres_password }}@pg_host/{{ redash_postgres_db }}"
+      QUEUES: "queries,scheduled_queries,celery"
+      WORKERS_COUNT: 2
+      REDASH_LDAP_LOGIN_ENABLED: 1
+      REDASH_LDAP_URL: "ldap://pg_host:10389"
+      REDASH_LDAP_BIND_DN: "cn=robot,ou=users,dc=crowd"
+      REDASH_LDAP_BIND_DN_PASSWORD: "{{ lookup('vault', 'secret/ansible/ldap_bind_password', 'value') }}"
+      REDASH_LDAP_DISPLAY_NAME_KEY: "cn"
+      REDASH_LDAP_EMAIL_KEY: "mail"
+      REDASH_LDAP_LDAP_CUSTOM_USERNAME_PROMPT: "Crowd username"
+      REDASH_LDAP_SEARCH_TEMPLATE: "(uid=%(username)s)"
+      REDASH_SEARCH_DN: "ou=users,dc=crowd"
+      REDASH_PASSWORD_LOGIN_ENABLED: 0
+  redis:
+    image: redis:3.0-alpine

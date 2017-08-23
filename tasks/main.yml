@@ -1,0 +1,18 @@
+---
+# tasks file for redash
+- name: create redash user
+  user: name={{ redash_user }}
+
+- name: create redash data dir
+  file: state=directory path={{ redash_home }} owner={{ redash_user }} recurse=true
+
+- name: copy docker-compose
+  template: backup=yes  dest="{{ redash_home }}/docker-compose.yml" owner={{ redash_user }}  src=docker-compose.yml.j2
+  notify: rebuild redash
+
+- name: copy systemd unit
+  template: src="redash.service.j2" dest="/etc/systemd/system/redash.service"
+  notify: systemctl daemon-reload
+
+- name: start the service
+  service: name=redash enabled=yes state=started
