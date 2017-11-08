@@ -1,7 +1,7 @@
 version: '2'
 services:
   server:
-    image: registry.auroraplatform.com/redash:{{ redash_version }}
+    image: {{ redash_registry }}/redash:{{ redash_version }}
     command: server
     depends_on:
       - redis

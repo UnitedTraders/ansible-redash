@@ -10,3 +10,4 @@ redash_home: '/opt/redash'
 redash_user: 'redash'
 
 redash_version: '2.0.1'
+redash_registry: 'redash'
