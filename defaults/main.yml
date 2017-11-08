@@ -8,3 +8,5 @@ redash_http_port: 5500
 
 redash_home: '/opt/redash'
 redash_user: 'redash'
+
+redash_version: '2.0.1'

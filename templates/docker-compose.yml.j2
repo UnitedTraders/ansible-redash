@@ -1,7 +1,7 @@
 version: '2'
 services:
   server:
-    image: registry.auroraplatform.com/redash:ldap
+    image: registry.auroraplatform.com/redash:{{ redash_version }}
     command: server
     depends_on:
       - redis
@@ -26,7 +26,7 @@ services:
       REDASH_SEARCH_DN: "ou=users,dc=crowd"
       REDASH_PASSWORD_LOGIN_ENABLED: 0
   worker:
-    image: registry.auroraplatform.com/redash:ldap
+    image: registry.auroraplatform.com/redash:{{ redash_version }}
     command: scheduler
     extra_hosts:
       - "pg_host:{{ redash_postgres_host }}"
