@@ -10,6 +10,18 @@
   template: backup=yes  dest="{{ redash_home }}/docker-compose.yml" owner={{ redash_user }}  src=docker-compose.yml.j2
   notify: rebuild redash
 
+- name: get actual docker-entrypoint file
+  get_url:
+    url: https://raw.githubusercontent.com/getredash/redash/master/bin/docker-entrypoint
+    dest: {{ redash_home }}/docker-entrypoint
+    mode: 0755
+
+- name: add ldap module
+  lineinfile:
+    path: {{ redash_home }}/docker-entrypoint
+    insertafter: '^set -e'
+    line: 'pip install -U ldap3==2.2.4'
+
 - name: copy systemd unit
   template: src="redash.service.j2" dest="/etc/systemd/system/redash.service"
   notify: systemctl daemon-reload
