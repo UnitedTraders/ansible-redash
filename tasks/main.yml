@@ -13,12 +13,13 @@
 - name: get actual docker-entrypoint file
   get_url:
     url: https://raw.githubusercontent.com/getredash/redash/master/bin/docker-entrypoint
-    dest: {{ redash_home }}/docker-entrypoint
+    dest: "{{ redash_home }}/docker-entrypoint"
     mode: 0755
+    force: yes
 
 - name: add ldap module
   lineinfile:
-    path: {{ redash_home }}/docker-entrypoint
+    path: "{{ redash_home }}/docker-entrypoint"
     insertafter: '^set -e'
     line: 'pip install -U ldap3==2.2.4'
 
@@ -27,4 +28,4 @@
   notify: systemctl daemon-reload
 
 - name: start the service
-  service: name=redash enabled=yes state=started
+  service: name=redash enabled=yes state=restarted
