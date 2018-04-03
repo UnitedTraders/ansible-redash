@@ -25,6 +25,7 @@ services:
       REDASH_LDAP_SEARCH_TEMPLATE: "(uid=%(username)s)"
       REDASH_SEARCH_DN: "ou=users,dc=crowd"
       REDASH_PASSWORD_LOGIN_ENABLED: 0
+      REDASH_FEATURE_SHOW_PERMISSIONS_CONTROL: 1
   worker:
     image: registry.auroraplatform.com/redash:{{ redash_version }}
     command: scheduler
@@ -47,5 +48,6 @@ services:
       REDASH_LDAP_SEARCH_TEMPLATE: "(uid=%(username)s)"
       REDASH_SEARCH_DN: "ou=users,dc=crowd"
       REDASH_PASSWORD_LOGIN_ENABLED: 0
+      REDASH_FEATURE_SHOW_PERMISSIONS_CONTROL: 1
   redis:
     image: redis:3.0-alpine
