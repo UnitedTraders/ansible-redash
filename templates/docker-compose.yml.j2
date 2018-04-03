@@ -9,6 +9,8 @@ services:
       - "{{ redash_http_port }}:5000"
     extra_hosts:
       - "pg_host:{{ redash_postgres_host }}"
+    volumes:
+      - ./docker-entrypoint:/app/bin/docker-entrypoint
     environment:
       PYTHONUNBUFFERED: 0
       REDASH_LOG_LEVEL: "INFO"
@@ -31,6 +33,8 @@ services:
     command: scheduler
     extra_hosts:
       - "pg_host:{{ redash_postgres_host }}"
+    volumes:
+      - ./docker-entrypoint:/app/bin/docker-entrypoint
     environment:
       PYTHONUNBUFFERED: 0
       REDASH_LOG_LEVEL: "INFO"
