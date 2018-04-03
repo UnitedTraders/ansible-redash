@@ -19,8 +19,8 @@ services:
       REDASH_COOKIE_SECRET: {{ redash_cookie_secret }}
       REDASH_LDAP_LOGIN_ENABLED: 1
       REDASH_LDAP_URL: "ldap://pg_host:10389"
-      REDASH_LDAP_BIND_DN: "cn=robot,ou=users,dc=crowd"
-      REDASH_LDAP_BIND_DN_PASSWORD: "{{ lookup('vault', 'secret/ansible/ldap_bind_password', 'value') }}"
+      REDASH_LDAP_BIND_DN: "cn={{ ldap_bind_username }},ou=users,dc=crowd"
+      REDASH_LDAP_BIND_DN_PASSWORD: "{{ ldap_bind_password }}"
       REDASH_LDAP_DISPLAY_NAME_KEY: "cn"
       REDASH_LDAP_EMAIL_KEY: "mail"
       REDASH_LDAP_LDAP_CUSTOM_USERNAME_PROMPT: "Crowd username"
@@ -44,8 +44,8 @@ services:
       WORKERS_COUNT: 2
       REDASH_LDAP_LOGIN_ENABLED: 1
       REDASH_LDAP_URL: "ldap://pg_host:10389"
-      REDASH_LDAP_BIND_DN: "cn=robot,ou=users,dc=crowd"
-      REDASH_LDAP_BIND_DN_PASSWORD: "{{ lookup('vault', 'secret/ansible/ldap_bind_password', 'value') }}"
+      REDASH_LDAP_BIND_DN: "cn={{ ldap_bind_username }},ou=users,dc=crowd"
+      REDASH_LDAP_BIND_DN_PASSWORD: "{{ ldap_bind_password }}"
       REDASH_LDAP_DISPLAY_NAME_KEY: "cn"
       REDASH_LDAP_EMAIL_KEY: "mail"
       REDASH_LDAP_LDAP_CUSTOM_USERNAME_PROMPT: "Crowd username"
