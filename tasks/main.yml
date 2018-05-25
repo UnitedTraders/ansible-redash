@@ -21,7 +21,7 @@
   lineinfile:
     path: "{{ redash_home }}/docker-entrypoint"
     insertafter: '^set -e'
-    line: 'pip install -U ldap3==2.2.4'
+    line: 'pip2 install -U ldap3==2.2.4 psycopg-binary'
 
 - name: copy systemd unit
   template: src="redash.service.j2" dest="/etc/systemd/system/redash.service"
