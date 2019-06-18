@@ -28,4 +28,4 @@
   notify: systemctl daemon-reload
 
 - name: start the service
-  service: name=redash enabled=yes state=restarted
+  systemd: name=redash enabled=yes state=restarted
