@@ -25,7 +25,6 @@
 
 - name: copy systemd unit
   template: src="redash.service.j2" dest="/etc/systemd/system/redash.service"
-  notify: systemctl daemon-reload
 
 - name: start the service
-  service: name=redash enabled=yes state=restarted
+  systemd: name=redash enabled=yes state=restarted daemon_reload=yes
