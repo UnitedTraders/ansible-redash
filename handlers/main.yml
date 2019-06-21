@@ -1,8 +1,5 @@
 ---
 # handlers file for redash
-- name: restart redash
-  systemd: name=redash state=restarted
-
 - name: rebuild redash
   command: /usr/bin/docker-compose build chdir={{ redash_home }}
   notify: initialise redash
@@ -12,8 +9,3 @@
   ignore_errors: yes
   notify:
     - restart redash
-
-- name: systemctl daemon-reload
-  systemd:
-    daemon_reload: yes
-  notify: restart redash
