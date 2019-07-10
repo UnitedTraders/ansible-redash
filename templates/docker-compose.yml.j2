@@ -28,6 +28,10 @@ services:
       REDASH_SEARCH_DN: "ou=users,dc=crowd"
       REDASH_PASSWORD_LOGIN_ENABLED: 0
       REDASH_FEATURE_SHOW_PERMISSIONS_CONTROL: 1
+    logging:
+      driver: syslog
+      options:
+        tag: sentry
   worker:
     image: registry.auroraplatform.com/redash:{{ redash_version }}
     command: scheduler
@@ -53,5 +57,9 @@ services:
       REDASH_SEARCH_DN: "ou=users,dc=crowd"
       REDASH_PASSWORD_LOGIN_ENABLED: 0
       REDASH_FEATURE_SHOW_PERMISSIONS_CONTROL: 1
+    logging:
+      driver: syslog
+      options:
+        tag: sentry
   redis:
     image: redis:3.0-alpine
