@@ -4,6 +4,9 @@ redash_postgres_user: redash
 redash_postgres_password: redash
 redash_postgres_db: redash
 redash_postgres_host: localhost
+redash_postgres_port: 5432
+redash_ldap_host: localhost
+redash_ldap_host: 10389
 redash_http_port: 5500
 
 redash_home: '/opt/redash'

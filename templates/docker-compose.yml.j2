@@ -15,10 +15,10 @@ services:
       PYTHONUNBUFFERED: 0
       REDASH_LOG_LEVEL: "INFO"
       REDASH_REDIS_URL: "redis://redis:6379/0"
-      REDASH_DATABASE_URL: "postgresql://{{ redash_postgres_user }}:{{ redash_postgres_password }}@pg_host/{{ redash_postgres_db }}"
+      REDASH_DATABASE_URL: "postgresql://{{ redash_postgres_user }}:{{ redash_postgres_password }}@{{ redash_postgres_host }}:{{ redash_postgres_port }}/{{ redash_postgres_db }}"
       REDASH_COOKIE_SECRET: {{ redash_cookie_secret }}
       REDASH_LDAP_LOGIN_ENABLED: 1
-      REDASH_LDAP_URL: "ldap://pg_host:10389"
+      REDASH_LDAP_URL: "ldap://{{ redash_ldap_host }}:{{ redash_ldap_port }}"
       REDASH_LDAP_BIND_DN: "cn={{ ldap_bind_username }},ou=users,dc=crowd"
       REDASH_LDAP_BIND_DN_PASSWORD: "{{ ldap_bind_password }}"
       REDASH_LDAP_DISPLAY_NAME_KEY: "cn"
@@ -43,11 +43,11 @@ services:
       PYTHONUNBUFFERED: 0
       REDASH_LOG_LEVEL: "INFO"
       REDASH_REDIS_URL: "redis://redis:6379/0"
-      REDASH_DATABASE_URL: "postgresql://{{ redash_postgres_user }}:{{ redash_postgres_password }}@pg_host/{{ redash_postgres_db }}"
+      REDASH_DATABASE_URL: "postgresql://{{ redash_postgres_user }}:{{ redash_postgres_password }}@{{ redash_postgres_host }}:{{ redash_postgres_port }}/{{ redash_postgres_db }}"
       QUEUES: "queries,scheduled_queries,celery"
       WORKERS_COUNT: 2
       REDASH_LDAP_LOGIN_ENABLED: 1
-      REDASH_LDAP_URL: "ldap://pg_host:10389"
+      REDASH_LDAP_URL: "ldap://{{ redash_ldap_host }}:{{ redash_ldap_port }}"
       REDASH_LDAP_BIND_DN: "cn={{ ldap_bind_username }},ou=users,dc=crowd"
       REDASH_LDAP_BIND_DN_PASSWORD: "{{ ldap_bind_password }}"
       REDASH_LDAP_DISPLAY_NAME_KEY: "cn"
